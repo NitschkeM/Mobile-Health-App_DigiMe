@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">InitTSProject</string>
+
+
+
+    <!-- Goal: AndroidManifest will read these values, then digi.me will be able to use them. -->
+    <string name="contract_id">fJI8P5Z4cIhP3HawlXVvxWBrbyj5QkTF</string>
+    <string name="app_id">AefyXzG3oQj6MYBAD9WGp4Bxax0PQumi</string>
+    <!--<string name="p12_filename">CA_RSA_PRIVATE_KEY.p12</string>-->
+    <string name="p12_filename">keys/CA_RSA_PRIVATE_KEY.p12</string>
+    <string name="p12_pass">monkey periscope</string>
 </resources>

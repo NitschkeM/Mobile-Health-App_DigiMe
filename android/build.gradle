@@ -2,8 +2,9 @@
 
 buildscript {
     ext {
-        buildToolsVersion = "28.0.2"
-        minSdkVersion = 16
+        buildToolsVersion = "28.0.3"
+        // minSdkVersion = 16  // uses-sdk:minVersion 16 cannot be smaller that version 21 declared in library me.di.sdk:digime-core:1.4.0
+        minSdkVersion = 21
         compileSdkVersion = 28
         targetSdkVersion = 27
         supportLibVersion = "28.0.0"
@@ -29,6 +30,11 @@ allprojects {
             // All of React Native (JS, Obj-C sources, Android binaries) is installed from npm
             url "$rootDir/../node_modules/react-native/android"
         }
+
+        maven {
+            url "https://repository.sysdigi.net/m2/libs-release"
+        }
+
     }
 }
 
