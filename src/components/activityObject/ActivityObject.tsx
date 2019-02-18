@@ -8,6 +8,8 @@ export default class ActivityObject extends React.Component {
     render() {
         return (
             <View>
+                <Text>-----------------------ActivityObject---------------------------</Text>
+                <Text>createddate: {new Date(this.props.activityObject.createddate).toString()}</Text>
                 <Text>activityname: {this.props.activityObject.activityname}</Text>
                 <Text>averageheartrate: {this.props.activityObject.averageheartrate}</Text>
                 <Text>calories: {this.props.activityObject.calories}</Text>

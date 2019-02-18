@@ -65,46 +65,52 @@ export default class ResultsView extends React.Component<any, IState> {
         const activityObjectCount: number = this.state.activityObjects.length;
         const activtySummaryObjectCount: number = this.state.activtySummaryObjects.length;
         const sleepObjectCount: number = this.state.sleepObjects.length;
-        // if (this.state.uniqueObjectTypes.length > 0) {
-        if (this.state.allFiles.length > 0) {
+        if (this.state.uniqueObjectTypes.length > 0) {
+        // if (this.state.allFiles.length > 0) {
 
             // const lastObject: string = this.state.data[this.state.data.length - 1];
             return (
-                <ScrollView>
-                    <FlatList
-                        data={this.state.fileNames}
-                        renderItem={({ item }) => <Text>{item}</Text>}
-                    />
-                    <Text>{this.state.allFiles[0]}</Text>
-                    <Text>***************************************</Text>
-                    <Text>{this.state.allFiles[1]}</Text>
-                    <Text>***************************************</Text>
-                    <Text>{this.state.allFiles[2]}</Text>
-                    <Text>***************************************</Text>
-                    <Text>{this.state.allFiles[3]}</Text>
-                    <Text>***************************************</Text>
-                    <Text>{this.state.allFiles[4]}</Text>
-                </ScrollView>
-                // <View>
-                //     <Text>activityObjectCount: {activityObjectCount}</Text>
-                //     <Text>activtySummaryObjectCount: {activtySummaryObjectCount}</Text>
-                //     <Text>sleepObjectCount: {sleepObjectCount}</Text>
-                //     {/* <FlatList
-                //         data={this.state.uniqueObjectTypes}
+                // <ScrollView>
+                //     <FlatList
+                //         data={this.state.fileNames}
                 //         renderItem={({ item }) => <Text>{item}</Text>}
-                //     /> */}
-                //     <FlatList
-                //         data={this.state.activityObjects}
-                //         renderItem={({ item }) => <ActivityObject activityObject={item}/>}
                 //     />
-                //     <FlatList
-                //         data={this.state.activtySummaryObjects}
-                //         renderItem={({ item }) => <ActivitySummaryObject activitySummaryObject={item}/>}
-                //     />
-                //     <FlatList
-                //         data={this.state.sleepObjects}
-                //         renderItem={({ item }) => <SleepObject sleepObject={item}/>}
-                //     />
+                //     <Text>{this.state.allFiles[0]}</Text>
+                //     <Text>***************************************</Text>
+                //     <Text>{this.state.allFiles[1]}</Text>
+                //     <Text>***************************************</Text>
+                //     <Text>{this.state.allFiles[2]}</Text>
+                //     <Text>***************************************</Text>
+                //     <Text>{this.state.allFiles[3]}</Text>
+                //     <Text>***************************************</Text>
+                //     <Text>{this.state.allFiles[4]}</Text>
+                // </ScrollView>
+
+
+                // <View>
+                <ScrollView>
+                    <Text>activityObjectCount: {activityObjectCount}</Text>
+                    <Text>activtySummaryObjectCount: {activtySummaryObjectCount}</Text>
+                    <Text>sleepObjectCount: {sleepObjectCount}</Text>
+                    {/* <FlatList
+                        data={this.state.uniqueObjectTypes}
+                        renderItem={({ item }) => <Text>{item}</Text>}
+                    /> */}
+                    <FlatList
+                        data={this.state.activityObjects}
+                        renderItem={({ item }) => <ActivityObject activityObject={item}/>}
+                    />
+                    <Text>***************************************</Text>
+                    <FlatList
+                        data={this.state.activtySummaryObjects}
+                        renderItem={({ item }) => <ActivitySummaryObject activitySummaryObject={item}/>}
+                    />
+                    <Text>***************************************</Text>
+                    <FlatList
+                        data={this.state.sleepObjects}
+                        renderItem={({ item }) => <SleepObject sleepObject={item}/>}
+                    />
+                    </ScrollView>
                 // </View>
             );
 
@@ -116,36 +122,36 @@ export default class ResultsView extends React.Component<any, IState> {
             <Text>sleepObjectCount: {sleepObjectCount}</Text> */}
         </View>;
     }
-    private addDataString(jsonString: string): void {
-        const allFiles: string[] = clone(this.state.allFiles);
-
-        // Remove fileName from jsonString
-        const modifiedJsonString = this.removeFileName(jsonString.toString());
-        allFiles.push(modifiedJsonString.toString());
-
-        this.setState({allFiles});
-    }
-
     // private addDataString(jsonString: string): void {
-    //     // Identify ObjectType.
-    //     const objectTypeId = this.extractObjectId(jsonString.toString());
+    //     const allFiles: string[] = clone(this.state.allFiles);
+
     //     // Remove fileName from jsonString
     //     const modifiedJsonString = this.removeFileName(jsonString.toString());
-    //     console.warn("Object to be parsed: ", modifiedJsonString);
-    //     const dataObject = JSON.parse(modifiedJsonString)[0]; // Object is the only element in an array.
+    //     allFiles.push(modifiedJsonString.toString());
 
-    //     if(objectTypeId === '300'){
-    //         this.addActivityObject(dataObject);
-    //     } else if (objectTypeId === '301'){
-    //         this.addDailyActivitySummaryObject(dataObject);
-    //     } else if (objectTypeId === '303'){
-    //         this.addSleepObject(dataObject);
-    //     } else {
-    //         console.error('Received object with unrecognized objectTypeId. This should not happen. Received objectTypeId:', objectTypeId);
-    //     }
-    //     // Add objectTypeId if it does not already exist.
-    //     this.updateUniqueObjectTypes(objectTypeId);
+    //     this.setState({allFiles});
     // }
+
+    private addDataString(jsonString: string): void {
+        // Identify ObjectType.
+        const objectTypeId = this.extractObjectId(jsonString.toString());
+        // Remove fileName from jsonString
+        const modifiedJsonString = this.removeFileName(jsonString.toString());
+        // console.warn("Object to be parsed: ", modifiedJsonString);
+        const dataObject = JSON.parse(modifiedJsonString)[0]; // Object is the only element in an array.
+
+        if(objectTypeId === '300'){
+            this.addActivityObject(dataObject);
+        } else if (objectTypeId === '301'){
+            this.addDailyActivitySummaryObject(dataObject);
+        } else if (objectTypeId === '303'){
+            this.addSleepObject(dataObject);
+        } else {
+            console.error('Received object with unrecognized objectTypeId. This should not happen. Received objectTypeId:', objectTypeId);
+        }
+        // Add objectTypeId if it does not already exist.
+        this.updateUniqueObjectTypes(objectTypeId);
+    }
 
     private extractObjectId(jsonString: string): string {
         let counter = 0;
@@ -174,9 +180,11 @@ export default class ResultsView extends React.Component<any, IState> {
             if (chr === '.') { // === vs ==
                 // slice string with interval [0, i+5] to extract filename (.json[{objectString}])
                 beginSlice = i + 5;
+                break;
             }
         }
         const fileName = jsonString.slice(0, beginSlice);
+        // const fileName = `${jsonString.slice(0, 35)} BS: ${beginSlice} Length: ${jsonString.length}`;
         fileNames.push(fileName);
         this.setState({fileNames});
         return jsonString.slice(beginSlice);
