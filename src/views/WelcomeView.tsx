@@ -6,6 +6,7 @@ import { Text } from "../components/Text";
 import { View } from "../components/View";
 import { Styles } from "../style/Styles";
 import { getPlatformString } from "../utils/AppUtils";
+import Icon from "../components/Icon/Icon"
 
 // import Svg, { Rect } from 'react-native-svg';
 // const Svg = require('react-native-svg');
@@ -36,7 +37,30 @@ export class WelcomeView extends React.Component<any, any> {
             <Button title="Start!" onPress={() => {
                 this.props.navigation.navigate("example");
             }} />
-            
+            <Button title="HealthSummary" onPress={() => {
+                this.props.navigation.navigate("healthSummary");
+            }} />
+            <Icon
+                name="flash"
+                color="#cc6699"
+                size={25}
+            />
+            <Icon
+                name="walk"
+                color="#ff0066"
+                size={25}
+            />
+            <Icon
+                name="bed"
+                color="#900"
+                size={25}
+                text="Here"
+            />
+            <Icon
+                name="medkit"
+                color="#6666ff"
+                size={25}
+            />
 
             {/* <Victory.VictoryBar/> */}
             {/* <VictoryBar/> */}

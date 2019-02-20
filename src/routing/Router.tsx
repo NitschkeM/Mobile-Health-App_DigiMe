@@ -4,6 +4,7 @@ import {NavigationContainer, StackNavigator, createStackNavigator, createAppCont
 import CAExample from "../views/CAExample";
 import ResultsView from "../views/ResultsView";
 import {WelcomeView} from "../views/WelcomeView";
+import {HealthSummaryView} from "../views/HealthSummaryView";
 
 // export const Router: NavigationContainer = StackNavigator({
 // export const Router: NavigationContainer = createStackNavigator({
@@ -16,6 +17,9 @@ const Router: NavigationContainer = createStackNavigator({
     },
     results: {
         screen: ResultsView,
+    },
+    healthSummary: {
+        screen: HealthSummaryView,
     },
 }, {
     headerMode: "screen",
