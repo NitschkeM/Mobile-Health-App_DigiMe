@@ -1,12 +1,8 @@
 import * as React from "react";
 import * as RNative from "react-native";
-import { Button } from "../components/Button";
-import { Image } from "../components/Image";
-import { Text } from "../components/Text";
 import { View } from "../components/View";
-import { Styles } from "../style/Styles";
-import { getPlatformString } from "../utils/AppUtils";
 import { StatSummaryBtn } from "../components/StatSummaryBtn";
+
 
 // import Svg, { Rect } from 'react-native-svg';
 // const Svg = require('react-native-svg');
@@ -22,31 +18,47 @@ enum StatType {
     ExerciseMin,
     HoursSlept
 }
-const devInstructions = RNative.Platform.select({
-    android: ["Android SDK available from", "http://github.com/digi.me/digime-android-sdk"].join("\n"),
-    ios: ["iOS SDK available from", "http://github.com/digi.me/digime-sdk-ios"].join("\n"),
-});
+
 
 export class HealthSummaryView extends React.Component<any, any> {
+    constructor(props) {
+        super(props);
+    }
     public render() {
         return (
-        // <View style={[Styles.centered, Styles.fill]}>
-        <View style = {styles.s1}>
-                {/* <StatSummaryBtn statValue={4577} />
+            <View>
+                <View style={styles.s1}>
+                    {/* <StatSummaryBtn statValue={4577} />
                 <StatSummaryBtn statValue={2400} />
                 <StatSummaryBtn statValue={45} />
                 <StatSummaryBtn statValue={7.5} /> */}
-            <StatSummaryBtn style={styles.s2} statType={StatType.Steps} statValue={4577} />
-            <StatSummaryBtn style={styles.s2} statType={StatType.Kcal} statValue={2400} />
-            <StatSummaryBtn style={styles.s2} statType={StatType.ExerciseMin} statValue={45} />
-            <StatSummaryBtn style={styles.s2} statType={StatType.HoursSlept} statValue={7.5} />
+                    {/* <StatSummaryBtn statType={StatType.Steps} statValue={4577} onPress={this.changeView("stepsSummary")}/>
+                    <StatSummaryBtn statType={StatType.Kcal} statValue={2400} onPress={this.changeView("kcalSummary")}/>
+                    <StatSummaryBtn statType={StatType.ExerciseMin} statValue={45} onPress={this.changeView("exerciseSummary")}/>
+                    <StatSummaryBtn statType={StatType.HoursSlept} statValue={7.5} onPress={this.changeView("sleepSummary")}/> */}
+                    {/* <StatSummaryBtn statType={StatType.Steps} statValue={4577} onPress={() => this.props.navigation.navigate("stepsSummary")} />
+                    <StatSummaryBtn statType={StatType.Kcal} statValue={2400} onPress={() => this.props.navigation.navigate("kcalSummary")} />
+                    <StatSummaryBtn statType={StatType.ExerciseMin} statValue={45} onPress={() => this.props.navigation.navigate("exerciseSummary")} />
+                    <StatSummaryBtn statType={StatType.HoursSlept} statValue={7.5} onPress={() => this.props.navigation.navigate("sleepSummary")} /> */}
+                    <StatSummaryBtn statType={StatType.Steps} statValue={4577} onPress={() => this.changeView("stepsSummary")} />
+                    <StatSummaryBtn statType={StatType.Kcal} statValue={2400} onPress={() => this.changeView("kcalsSummary")} />
+                    <StatSummaryBtn statType={StatType.ExerciseMin} statValue={45} onPress={() => this.changeView("exerciseSummary")} />
+                    <StatSummaryBtn statType={StatType.HoursSlept} statValue={7.5} onPress={() => this.changeView("sleepSummary")} />
 
 
-            {/* <Victory.VictoryBar/> */}
-            {/* <VictoryBar/> */}
-            {/* <RectExample/> */}
-        </View>
+                    {/* <Victory.VictoryBar/> */}
+                    {/* <VictoryBar/> */}
+                    {/* <RectExample/> */}
+                </View>
+                {/* <RectButton style={styles.button}>
+                    <Text style={styles.bgc}> Here</Text>
+                </RectButton> */}
+            </View>
         );
+    }
+
+    private changeView(view: String): void {
+        this.props.navigation.navigate(view);
     }
 }
 
@@ -54,18 +66,29 @@ const styles = RNative.StyleSheet.create({
     s1: {
         flexDirection: 'row',
         justifyContent: 'space-evenly',
-        // alignItems: 'flex-start'
+        // alignItems: 'stretch',
 
         // display: 'flex',
-        // backgroundColor: 'blue'
+        backgroundColor: '#FECEDF'
         // flex: 1
         // alignContent: 'space-around'
     },
-    s2: {
-        // flex: 1
-        // fontSize: 45
+    bgc:{
+        backgroundColor: '#97E6EF',
     },
-    s3:{
-
-    }
+    list: {
+        backgroundColor: '#EFEFF4',
+    },
+    separator: {
+        height: 1,
+        backgroundColor: '#DBDBE0',
+    },
+    button: {
+        flex: 1,
+        height: 60,
+        padding: 10,
+        flexDirection: 'row',
+        alignItems: 'center',
+        backgroundColor: '#fff',
+    },
 });

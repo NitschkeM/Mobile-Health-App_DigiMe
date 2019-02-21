@@ -2,7 +2,10 @@ import React from "react";
 import * as RNative from "react-native";
 import { Platform, Text, View } from "react-native";
 import Icon from "../components/Icon/Icon";
-import TapGestureHandler from "react-native-gesture-handler";
+
+
+// import TapGestureHandler from "react-native-gesture-handler";
+import {RectButton} from 'react-native-gesture-handler';
 
 
 // Factor StatType to some common place right?
@@ -29,29 +32,40 @@ statTextMap.set(StatType.HoursSlept, "Sleep");
 
 // export const StatSummaryBtn = ({name, ...props}) => {
 // export const StatSummaryBtn = (statType: StatType = StatType.Steps, statValue: number) => {
-export const StatSummaryBtn = ({statType, statValue}) => {
-    // Perhaps make some enum(?) of relevant statTypes.
-    // And a mapping of statType -> Icon. Then: iconName = statTypeToIconName[statType]
+// export const StatSummaryBtn = ({statType, statValue}) => {
+export class StatSummaryBtn extends React.Component {
 
-    // const iconName: string = statType === 'steps' ? 'walking' :
-    const iconName = iconNameMap.get(statType);
-    const statText = statTextMap.get(statType);
+    private iconName:string;
+    private statText:string;
+    // private onPress;
 
+    constructor(props){
+        super(props);
+        this.iconName = iconNameMap.get(props.statType);
+        this.statText = statTextMap.get(props.statType);
+        // this.onPress = this.props.onPress;
+        // this.onPress = this.props.onPress.bind(this);
+    };
 
-    return (
-        // <TapGestureHandler >
-            <View style={styles.s1}>
-                <Icon
-                    name={iconName}
-                    color="#ff0066"
-                    size={50}
-                />
-                <Text style={styles.s2}>{statValue}</Text>
-                <Text style={styles.s2}>{statText}</Text>
-            </View>
-        // </TapGestureHandler>
-        
-    );
+    
+    // private onPress = () => console.warn(`Clicked: ${this.iconName}`);
+
+    render(){
+        return (
+            // <RectButton onPress={this.onPress}>
+            <RectButton onPress={this.props.onPress}>
+                <View style={styles.s1}>
+                    <Icon
+                        name={this.iconName}
+                        color="#ff0066"
+                        size={50}
+                    />
+                    <Text style={styles.s2}>{this.props.statValue}</Text>
+                    <Text style={styles.s2}>{this.statText}</Text>
+                </View>
+            </RectButton>
+        );
+    }
 }
 
 const styles = RNative.StyleSheet.create({
@@ -60,10 +74,12 @@ const styles = RNative.StyleSheet.create({
         // justifyContent: 'space-evenly',
         alignItems: 'center',
 
-        // backgroundColor: '#97E6EF'
+        backgroundColor: '#97E6EF',
         // display: 'flex',
-        // flex: 1
-        // alignContent: 'space-around'
+        // flex: 1,
+        // flexGrow: 1,
+        width: 70,
+        // alignContent: 'space-around',
     },
     s2: {
         // flex: 1

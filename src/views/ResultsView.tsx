@@ -52,6 +52,8 @@ export default class ResultsView extends React.Component<any, IState> {
     }
 
     public componentDidMount(): void {
+        // bind might not be necessary anymore? Or only with React.createClass?
+        // https://reactjs.org/blog/2013/07/02/react-v0-4-autobind-by-default.html
         this.fileData = NativeBridge.getNativeBridge().addListener(Events.FILE_DATA, this.addDataString.bind(this));
     }
 
