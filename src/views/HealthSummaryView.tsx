@@ -4,12 +4,6 @@ import { View } from "../components/View";
 import { StatSummaryBtn } from "../components/StatSummaryBtn";
 
 
-// import Svg, { Rect } from 'react-native-svg';
-// const Svg = require('react-native-svg');
-// import * as Svg from 'react-native-svg';
-
-// const Victory = require('victory-native');
-// import { VictoryBar } from 'victory-native';
 
 // Factor StatType to some common place right?
 enum StatType {

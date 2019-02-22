@@ -1,4 +1,3 @@
-import * as React from "react";
 import {Animated} from "react-native";
 import {NavigationContainer, StackNavigator, createStackNavigator, createAppContainer} from "react-navigation";
 import CAExample from "../views/CAExample";

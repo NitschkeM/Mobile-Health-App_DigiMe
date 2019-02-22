@@ -5,23 +5,71 @@ import {View} from "../components/View";
 import { FlatList } from "react-native-gesture-handler";
 
 
-export class KcalsSummaryView extends React.Component<any, any> {
-    // private testData:Map<Date,number>;
-    private testData:{key: {date:number; steps:number}}[];
-    // private testData:[];
+// import Svg, { Rect } from 'react-native-svg';
+// const Svg = require('react-native-svg');
+// import * as Svg from 'react-native-svg';
 
+const Victory = require('victory-native');
+// import { VictoryBar } from 'victory-native';
+// import VictoryBar from "victory-native";
+
+export class KcalsSummaryView extends React.Component<any, any> {
+
+
+    // private testData:{key: {date:number; kcals:number}}[];
+    private testData:[];
+    private daysInTestData:number = 50;
+    private startDateInTestData: Date = new Date(2018, 1, 1);
+    // date.setDate(date.getDate()+1);
     constructor(props) {
         super(props);
-        this.testData = getTestData();
+        this.testData = getTestData(this.startDateInTestData, this.daysInTestData);
+        this.state = {
+            // zoomDomain: {x: [new Date(this.startDateInTestData), new Date(this.startDateInTestData.getDate() + 50)]}
+            // zoomDomain: {x: [new Date(this.startDateInTestData), new Date(addDays(this.startDateInTestData, 50))]}
+            zoomDomain: {x: [this.testData[0].x, this.testData[this.daysInTestData-1].x]}
+        };
     }
+
+    public componentDidMount(): void {
+        // this.testData = getTestData(this.startDateInTestData, this.daysInTestData);
+        this.handleZoom(this.state.zoomDomain);
+    }
+
+    // public componentWillUnmount(): void {
+    // }
+
+    handleZoom(domain){
+        this.setState({zoomDomain: domain})
+    }
+
     public render() {
         return (
-            <View style={styles.s1}>
-                <Text style={styles.h1}>KcalsSummaryView</Text>
-                {/* <FlatList data={this.testData} renderItem={({item}) => <Text style={styles.bgcList}>{new Date(item.key.date).toDateString()} : {item.key.steps}</Text>}/> */}
-                {/* <FlatList data={this.testData} renderItem={this._renderItem} /> */}
-                <FlatList data={this.testData} renderItem={this._renderItem} ItemSeparatorComponent={this._renderSeparator}/>
+            <View style={styles.container}>
+                <Victory.VictoryChart
+                    scale={{ x: "time" }}
+                    containerComponent={
+                        <Victory.VictoryZoomContainer
+                            zoomDimension="x"
+                            zoomDomain={this.state.zoomDomain}
+                            onZoomDomainChange={this.handleZoom.bind(this)}
+                        />}>
+                    <Victory.VictoryLine
+                        style={{ data: { stroke: "tomato" } }}
+                        data={this.testData}
+                    />
+                </Victory.VictoryChart>
             </View>
+            // <View style={styles.container}>
+            //     {/* <Victory.VictoryChart width={350} theme={Victory.VictoryTheme.material} /> */}
+            //     <Victory.VictoryChart scale={{x:"time"}}>
+            //         {/* <Victory.VictoryBar data={this.data} x="quarter" y="earnings" /> */}
+            //         <Victory.VictoryLine 
+            //         style={{data: {stroke:"tomato"}}} 
+            //         data={this.testData} 
+            //         />
+            //     </Victory.VictoryChart>
+            // </View>
         );
     }
 
@@ -50,6 +98,12 @@ export class KcalsSummaryView extends React.Component<any, any> {
 }
 
 const styles = RNative.StyleSheet.create({
+    container: {
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+        backgroundColor: "#f5fcff"
+      },
     s1: {
         flexDirection: 'column',
         justifyContent: 'space-evenly',
@@ -76,18 +130,20 @@ const styles = RNative.StyleSheet.create({
     },
 });
 
-function getTestData(){
+function getTestData(startDate: Date, daysInTestData:number){
     const data = [];
-    let date: Date = new Date(2018, 1, 1);
+    let date:Date = startDate;
 
-    for (let i=0; i<50; i++){
+    for (let i=0; i<daysInTestData; i++){
         let dateVal = date.setDate(date.getDate()+1);
         let kcals = Math.floor(Math.random()*4000);
-        let day = {
-            date: dateVal,
-            kcals: kcals
-        };
-        data.push({key:day});
+        data.push({x:dateVal, y:kcals});
     }
     return data;
 }
+
+function addDays(date, days) {
+    var result = new Date(date);
+    result.setDate(result.getDate() + days);
+    return result;
+  }
